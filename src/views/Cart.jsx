@@ -31,7 +31,7 @@ export default function Cart() {
                             ]}
                         >
                             <List.Item.Meta
-                                avatar={<Image width={50} src={item.image} alt={item.name} />}
+                                avatar={<Image width={50} src={item.image || 'https://via.placeholder.com/50'} alt={item.name} />}
                                 title={item.name}
                                 description={`$${item.price}`}
                             />

@@ -1,93 +1,40 @@
-import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { MenuOutlined, CloseOutlined, DownOutlined, SearchOutlined, GlobalOutlined, BulbOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import { Drawer, Button, Input, Dropdown, Space, Badge } from 'antd';
-import { useTranslation } from 'react-i18next';
-import logo from "/icon.png"
-import { ThemeContext } from '../context/ThemeContext';
-import { CartContext } from '../context/CartContext';
+import { Link } from "react-router-dom";
+import { ShoppingCartOutlined, LogoutOutlined } from "@ant-design/icons";
+import { Badge, message } from "antd";
+import { useContext } from "react";
+import { ThemeContext } from "../context/ThemeContext";
+import { CartContext } from "../context/CartContext";
+import logo from "/icon.png";
 
-export default function Navbar() {
-    const { t, i18n } = useTranslation();
-    const [open, setOpen] = useState(false);
+export default function Nav() {
+  const themeContext = useContext(ThemeContext);
+  const { cartItems } = useContext(CartContext);
 
-    const items = [
-        { label: '1st menu item', key: '1' },
-        { label: '2nd menu item', key: '2' },
-        { label: '3rd menu item', key: '3' },
-    ];
+  const token = localStorage.getItem("token");
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    message.success("Logged out");
+    window.location.reload();
+  };
 
-    const themeContext = useContext(ThemeContext);
-    const cartContext = useContext(CartContext)
-
-    const toggleDrawer = () => {
-        setOpen(!open);
-    };
-
-    const changeLanguage = (lng) => {
-        i18n.changeLanguage(lng);
-    };
-
-    return (
-        <nav className={`shadow-md p-4 w-full ${themeContext.themeColor === 'light' ? 'text-gray-800' : 'text-white bg-gray-800'}`}>
-            <div className="container mx-auto flex justify-between items-center">
-                <Link to="/">
-                    <img src={logo} width={30} alt="Site logo" />
-                </Link>
-
-                <div className="hidden md:flex space-x-10 items-center">
-                    <Link to="/" className="hover:text-blue-600 text-nowrap">{t('home')}</Link>
-                    <Link to="/products" className="hover:text-blue-600 text-nowrap">{t('products')}</Link>
-                    <Dropdown menu={{ items }}>
-                        <a onClick={(e) => e.preventDefault()}>
-                            <Space>
-                                {t('shop')} <DownOutlined />
-                            </Space>
-                        </a>
-                    </Dropdown>
-                    <Link to="/contact" className="hover:text-blue-600 text-nowrap">{t('contact')}</Link>
-
-                    <Input placeholder={t('search')} prefix={<SearchOutlined />} className="hidden md:block w-64 rounded-lg bg-gray-300 p-4" />
-
-                    <Space>
-                        <Button type="text" icon={<GlobalOutlined style={{ filter: themeContext.themeColor === 'dark' ? 'invert(1)' : '' }} />} onClick={() => changeLanguage(i18n.language === 'en' ? 'ar' : 'en')} />
-                        <Button type="text" icon={<BulbOutlined style={{ filter: themeContext.themeColor === 'dark' ? 'invert(1)' : '' }} />} onClick={themeContext.handleTheme} />
-                        <Link to="/cart" className="relative">
-                            <Badge count={cartContext.cartItems.length} offset={[10, 0]}>
-                                <ShoppingCartOutlined className="text-2xl" />
-                            </Badge>
-                        </Link>
-                    </Space>
-                </div>
-
-                <div className="md:hidden flex items-center">
-                    <Input placeholder={t('search')} prefix={<SearchOutlined />} className="mr-4" />
-                    <Button type="text" icon={<MenuOutlined />} onClick={toggleDrawer} />
-                </div>
-            </div>
-
-            <Drawer title={t('menu')} placement="right" onClose={toggleDrawer} open={open} closeIcon={<CloseOutlined />}>
-                <div className="flex flex-col text-center space-y-4">
-                    <Link to="/" onClick={toggleDrawer} className="text-gray-700 hover:text-blue-600 text-nowrap">{t('home')}</Link>
-                    <Link to="/products" onClick={toggleDrawer} className="text-gray-700 hover:text-blue-600 text-nowrap">{t('products')}</Link>
-                    <Dropdown trigger={['click']} className='flex justify-center'>
-                        <span className="cursor-pointer text-gray-700 hover:text-blue-600 text-nowrap flex items-center">
-                            {t('shop')} <DownOutlined className="w-2 ml-1" />
-                        </span>
-                    </Dropdown>
-                    <Link to="/contact" onClick={toggleDrawer} className="text-gray-700 hover:text-blue-600 text-nowrap">{t('contact')}</Link>
-                </div>
-                <div className='flex items-center justify-center mt-4'>
-                    <Button type="text" icon={<GlobalOutlined />} onClick={() => changeLanguage(i18n.language === 'en' ? 'ar' : 'en')} />
-                    <Button type="text" icon={<BulbOutlined />} onClick={themeContext.handleTheme} />
-                    <Link to="/cart" className="relative">
-                        <Badge count={cartContext.cartItems.length} offset={[10, 0]}>
-                            <ShoppingCartOutlined className="text-2xl" />
-                        </Badge>
-                    </Link>
-                </div>
-            </Drawer>
-        </nav>
-    );
+  return (
+    <nav className={`shadow-md p-4 w-full ${themeContext.themeColor === "light" ? "text-gray-800" : "text-white bg-gray-800"}`}>
+      <div className="container mx-auto flex justify-between items-center">
+        <Link to="/"><img src={logo} width={30} alt="logo" /></Link>
+        <div className="flex items-center space-x-6">
+          <Link to="/">Home</Link>
+          <Link to="/products">Products</Link>
+          <Link to="/cart">
+            <Badge count={cartItems.length}>
+              <ShoppingCartOutlined className="text-xl" />
+            </Badge>
+          </Link>
+          {!token && <Link to="/login">Login</Link>}
+          {token && <LogoutOutlined className="cursor-pointer" onClick={handleLogout} title="Logout" />}
+        </div>
+      </div>
+    </nav>
+  );
 }
+

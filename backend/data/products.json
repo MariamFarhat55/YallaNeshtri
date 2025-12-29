@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "Blue Shirt",
+    "price": 22.3,
+    "description": "A nice blue shirt",
+    "category": "men's clothing",
+    "image": "/images/blue-shirt.jpg",
+    "rating": { "rate": 4.1, "count": 259 }
+  },
+  {
+    "id": 2,
+    "title": "Red Dress",
+    "price": 59.99,
+    "description": "Beautiful red dress",
+    "category": "women's clothing",
+    "image": "/images/red-dress.jpg",
+    "rating": { "rate": 4.7, "count": 150 }
+  }
+]
