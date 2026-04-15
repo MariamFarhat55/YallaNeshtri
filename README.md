@@ -1,8 +1,24 @@
-# React + Vite
+# 🛒 YallaNeshtri
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+YallaNeshtri is a full-stack e-commerce web application inspired by platforms like Noon and Amazon.
 
-Currently, two official plugins are available:
+This project was initially built as part of a training project and has been significantly extended, customized, and improved with additional features, structure, and functionality.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
+
+### Frontend
+- React
+- CSS
+- JavaScript
+- Axios
+
+### Backend
+- Node.js
+- Express.js
+- RESTful APIs
+
+### Data Handling
+- JSON-based data (can be extended to a database)
+## Features
+- User authentication (Signup / Login)
+- Product listing and featured products
